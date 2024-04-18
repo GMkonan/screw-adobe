@@ -1,15 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import SubscribeForm from "@/components/SubscribeForm";
 import { cn } from "@/lib/utils";
 import { db } from "@/server/db";
-// import Link from "next/link";
 
 export default async function HomePage() {
   const sale = await db.query.onSale.findFirst();
   console.log("sale", sale);
 
-  // const a = await db.select().from(onSale);
-  // console.log("a", a);
   return (
     <section className="h-screen w-full bg-black py-12 md:py-24 lg:py-32 xl:py-48">
       <div className="container px-4 md:px-6">
@@ -37,16 +33,7 @@ export default async function HomePage() {
               <div className="md:text-md mx-auto max-w-[600px] text-zinc-200 dark:text-zinc-100">
                 Receive an email when Affinity Suite is on sale.
               </div>
-              <form className="flex space-x-2">
-                <Input
-                  className="max-w-lg flex-1 border-gray-900 bg-gray-800 text-white"
-                  placeholder="Enter your email"
-                  type="email"
-                />
-                <Button className="bg-white text-black" type="submit">
-                  Subscribe
-                </Button>
-              </form>
+              <SubscribeForm />
             </div>
           </div>
         </div>
