@@ -7,7 +7,16 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-
+    TURSO_DATABASE_URL: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_TURSO_DATABASE_URL"),
+        "You forgot to change the default URL"
+      ),
+      TURSO_AUTH_TOKEN: z.string().refine(
+        (str) => !str.includes("YOUR_TURSO_AUTH_TOKEN"),
+        "You forgot to add your turso auth token"
+      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -27,7 +36,8 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-
+    TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
+    TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

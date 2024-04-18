@@ -1,8 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { db } from "@/server/db";
+// import Link from "next/link";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const sale = await db.query.onSale.findFirst();
+  console.log("sale", sale);
+
+  // const a = await db.select().from(onSale);
+  // console.log("a", a);
   return (
     <section className="h-screen w-full bg-black py-12 md:py-24 lg:py-32 xl:py-48">
       <div className="container px-4 md:px-6">
@@ -16,8 +23,15 @@ export default function HomePage() {
                 Get to know when Affinity Suite is on sale!
               </p>
             </div>
-            <div className="text-xl font-bold text-red-700">
-              Current not on sale :(
+            <div
+              className={cn(
+                "text-xl font-bold",
+                `${sale?.isOnSale === true ? " text-green-700" : "text-red-700"}`,
+              )}
+            >
+              {sale?.isOnSale === true
+                ? "On Sale :)"
+                : "Current not on sale :("}
             </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
               <div className="md:text-md mx-auto max-w-[600px] text-zinc-200 dark:text-zinc-100">
