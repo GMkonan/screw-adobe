@@ -40,7 +40,7 @@ table "notifications" for people who want to receive an email for when affinity 
 - [x] Setup Database (turso)
 - [x] Add database calls to api and frontend
   - Seems like we can't have tables with \_ in drizzle sqlite (was getting a bug with "on_sale")
-- [ ] Setup email notifications
+- [x] Setup email notifications
 - [ ] Create email template Interface
 - [ ] Correct logic to only send email when on sale and in a certain interval (everyday during sale?)
 - [ ] Setup cronjob to check for sale (upstash?)
