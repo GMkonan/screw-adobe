@@ -7,7 +7,7 @@ import { onSale } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { Resend } from "resend";
-import { SubscribeEmailTemplate } from "@/components/SubscribeEmailTemplate";
+import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
 import { renderAsync } from "@react-email/render";
 
 const resend = new Resend(env.RESEND_API_KEY);
@@ -40,12 +40,17 @@ export async function GET() {
   }
 
   const templateToHtml = await renderAsync(
-    SubscribeEmailTemplate({ firstName: "John" }) as React.ReactElement,
+    SubscribeEmailTemplate({}) as React.ReactElement,
   );
 
+  // get Users who should receive email
+  const users = await db.query.notifications.findMany({
+    where: (users, { eq }) => eq(users.subscribed, true),
+  });
+
   const data = await resend.emails.send({
-    from: "noreply@gmkonan.dev",
-    to: ["guilhemontdev@gmail.com"],
+    from: "Screw <noreply@gmkonan.dev>",
+    to: users.map((user) => user.email!),
     subject: "Affinity suite is on sale!",
     html: templateToHtml,
     // not sure why but passing directly react property doesnt work, so it needs to render and go as html

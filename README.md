@@ -2,7 +2,7 @@ Screw adobe, buy affinity
 
 ### Tech
 
-- turso?
+- turso
 - resend (email)
 - cheerio
 - vercel (hope the hosting works in this case)
@@ -41,12 +41,18 @@ table "notifications" for people who want to receive an email for when affinity 
 - [x] Add database calls to api and frontend
   - Seems like we can't have tables with \_ in drizzle sqlite (was getting a bug with "on_sale")
 - [x] Setup email notifications
-- [ ] Create email template Interface
-- [ ] Correct logic to only send email when on sale and in a certain interval (everyday during sale?)
+- [x] Create email template Interface
+- [ ] Add a way to unsubscribe from email notifications
+  - [ ] Need to see a logic for when someone subscribes, unsubscribes and subscribes again
 - [ ] Setup cronjob to check for sale (upstash?)
   - cron should be used for both checking for sale and sending email
-- [ ] Add a way to unsubscribe from email notifications
+  - define correct interval (everyday?)
+- [ ] open graph stuff
 - [ ] Deploy to vercel
+
+### Questions
+
+- should I make some sort of queue system to send the emails? or just bulk? check that other project to see how it was done.
 
 ### Some references
 
