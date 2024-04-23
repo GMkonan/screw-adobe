@@ -49,13 +49,15 @@ table "notifications" for people who want to receive an email for when affinity 
   - [x] make it so a user can "resubscribe" to email notifications if he reenters the email in subscribeForm
   - [x] should the unsubscribe route be a page? Not for now because I'm lazy
 - [x] check if schema has email as unique
-- [ ] rate limiter?
-- [ ] open graph stuff
-- [ ] Add toast or something to show you subscribed (maybe not, lazy)
+- [x] tidy up route api code and handle sending emails only when there is a sale
+- [ ] rate limiter? (both api endpoints and subscribe form)
 - [ ] Deploy to vercel
+- [ ] Some more visual tinkering (both email and UI)
 - [ ] Setup cronjob to check for sale (upstash?)
   - cron should be used for both checking for sale and sending email
   - define correct interval (everyday?)
+- [ ] open graph stuff
+- [ ] Add toast or something to show you subscribed (maybe not, lazy)
 
 ### Questions
 

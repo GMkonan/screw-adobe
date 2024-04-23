@@ -8,9 +8,37 @@ import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { Resend } from "resend";
 import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
-import { renderAsync, render } from "@react-email/render";
+import { render } from "@react-email/render";
 
 const resend = new Resend(env.RESEND_API_KEY);
+
+const sendEmail = async (userEmail: string) => {
+  const templateToHtml = render(
+    SubscribeEmailTemplate({ userEmail: userEmail }) as React.ReactElement,
+  );
+
+  await resend.emails.send({
+    from: "test <noreply@gmkonan.dev>",
+    to: userEmail,
+    subject: "Affinity suite is on sale!",
+    html: templateToHtml,
+    // not sure why but passing directly react property doesnt work, so it needs to render and go as html
+  });
+};
+
+const sendNotification = async () => {
+  const users = await db.query.notifications.findMany({
+    where: (users, { eq }) => eq(users.subscribed, true),
+  });
+
+  // this way the emails will still be sent even if one goes wrong
+  // probably the best I can do without implementing a queue system
+  const userPromises = [...new Set(users)].map((user) => {
+    return sendEmail(user.email!);
+  });
+
+  return await Promise.all(userPromises);
+};
 
 export async function GET() {
   // fetch data from affinity website
@@ -29,49 +57,18 @@ export async function GET() {
     // update should probably not rely on hardcoded id 1
     isOnSale?.isOnSale === false &&
       (await db.update(onSale).set({ isOnSale: true }).where(eq(onSale.id, 1)));
-    console.log("update to true");
+
+    // only send notifications if the sale is on
+    const data = await sendNotification();
+
+    console.log(data);
   } else if (!sale) {
     isOnSale?.isOnSale === true &&
       (await db
         .update(onSale)
         .set({ isOnSale: false })
         .where(eq(onSale.id, 1)));
-    console.log("update to false");
   }
-
-  // get Users who should receive email
-  const users = await db.query.notifications.findMany({
-    where: (users, { eq }) => eq(users.subscribed, true),
-  });
-
-  // this way the emails will still be sent even if one goes wrong
-  // probably the best I can do without implementing a queue system
-  const userPromises = [...new Set(users)].map((user) => {
-    const templateToHtml = render(
-      SubscribeEmailTemplate({ userEmail: user.email! }) as React.ReactElement,
-    );
-
-    return resend.emails.send({
-      from: "test <noreply@gmkonan.dev>",
-      to: user.email!,
-      subject: "Affinity suite is on sale!",
-      html: templateToHtml,
-      // not sure why but passing directly react property doesnt work, so it needs to render and go as html
-    });
-  });
-
-  const data = await Promise.all(userPromises);
-
-  // const data = await resend.emails.send({
-  //   from: "Screw <noreply@gmkonan.dev>",
-  //   // max 50 emails
-  //   to: users.map((user) => user.email!),
-  //   subject: "Affinity suite is on sale!",
-  //   html: templateToHtml,
-  //   // not sure why but passing directly react property doesnt work, so it needs to render and go as html
-  // });
-
-  console.log(data);
 
   return sale
     ? NextResponse.json(
