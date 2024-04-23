@@ -8,12 +8,15 @@ import {
 import * as React from "react";
 
 interface EmailTemplateProps {
+  userEmail: string;
   isSaleOn?: boolean;
 }
 
 // I think we don't need to pass props for now but...
 
-export const MyEmail: React.FC<Readonly<EmailTemplateProps>> = ({}) => {
+export const MyEmail: React.FC<Readonly<EmailTemplateProps>> = ({
+  userEmail,
+}) => {
   return (
     <Html>
       <Container>
@@ -24,9 +27,9 @@ export const MyEmail: React.FC<Readonly<EmailTemplateProps>> = ({}) => {
         >
           Head to their website
         </Button>
-        {/* <Link href="http://localhost:3000/api/unsubscribe">
+        <Link href={`http://localhost:3000/api/unsubscribe?email=${userEmail}`}>
           Unsubscribe from email notifications
-        </Link> */}
+        </Link>
       </Container>
     </Html>
   );

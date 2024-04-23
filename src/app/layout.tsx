@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "screw adobe",
-  description: "buy affinity",
+  title: "Screw Adobe",
+  description: "Buy Affinity",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

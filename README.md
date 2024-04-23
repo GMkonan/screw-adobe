@@ -42,13 +42,20 @@ table "notifications" for people who want to receive an email for when affinity 
   - Seems like we can't have tables with \_ in drizzle sqlite (was getting a bug with "on_sale")
 - [x] Setup email notifications
 - [x] Create email template Interface
-- [ ] Add a way to unsubscribe from email notifications
-  - [ ] Need to see a logic for when someone subscribes, unsubscribes and subscribes again
+- [x] Remade the design (somewhat)
+- [x] Add a way to unsubscribe from email notifications
+  - [x] try email map promise thing
+  - [x] Need to see a logic for when someone subscribes, unsubscribes and subscribes again
+  - [x] make it so a user can "resubscribe" to email notifications if he reenters the email in subscribeForm
+  - [x] should the unsubscribe route be a page? Not for now because I'm lazy
+- [x] check if schema has email as unique
+- [ ] rate limiter?
+- [ ] open graph stuff
+- [ ] Add toast or something to show you subscribed (maybe not, lazy)
+- [ ] Deploy to vercel
 - [ ] Setup cronjob to check for sale (upstash?)
   - cron should be used for both checking for sale and sending email
   - define correct interval (everyday?)
-- [ ] open graph stuff
-- [ ] Deploy to vercel
 
 ### Questions
 

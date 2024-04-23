@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { Resend } from "resend";
 import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
-import { renderAsync } from "@react-email/render";
+import { renderAsync, render } from "@react-email/render";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -39,22 +39,37 @@ export async function GET() {
     console.log("update to false");
   }
 
-  const templateToHtml = await renderAsync(
-    SubscribeEmailTemplate({}) as React.ReactElement,
-  );
-
   // get Users who should receive email
   const users = await db.query.notifications.findMany({
     where: (users, { eq }) => eq(users.subscribed, true),
   });
 
-  const data = await resend.emails.send({
-    from: "Screw <noreply@gmkonan.dev>",
-    to: users.map((user) => user.email!),
-    subject: "Affinity suite is on sale!",
-    html: templateToHtml,
-    // not sure why but passing directly react property doesnt work, so it needs to render and go as html
+  // this way the emails will still be sent even if one goes wrong
+  // probably the best I can do without implementing a queue system
+  const userPromises = [...new Set(users)].map((user) => {
+    const templateToHtml = render(
+      SubscribeEmailTemplate({ userEmail: user.email! }) as React.ReactElement,
+    );
+
+    return resend.emails.send({
+      from: "test <noreply@gmkonan.dev>",
+      to: user.email!,
+      subject: "Affinity suite is on sale!",
+      html: templateToHtml,
+      // not sure why but passing directly react property doesnt work, so it needs to render and go as html
+    });
   });
+
+  const data = await Promise.all(userPromises);
+
+  // const data = await resend.emails.send({
+  //   from: "Screw <noreply@gmkonan.dev>",
+  //   // max 50 emails
+  //   to: users.map((user) => user.email!),
+  //   subject: "Affinity suite is on sale!",
+  //   html: templateToHtml,
+  //   // not sure why but passing directly react property doesnt work, so it needs to render and go as html
+  // });
 
   console.log(data);
 

@@ -9,16 +9,18 @@ const SubscribeForm = () => {
   const [message, formAction] = useFormState(subscribeUser, null);
   return (
     <form action={formAction} className="flex space-x-2">
-      <Input
-        name="email"
-        className="max-w-lg flex-1 border-gray-900 bg-gray-800 text-white"
-        placeholder="Enter your email"
-        type="email"
-      />
-      <Button className="bg-white text-black" type="submit">
-        Subscribe
-      </Button>
-      {message && <p className="text-red-700">{message.message}</p>}
+      <div className="flex w-full items-center justify-center gap-x-1">
+        <Input
+          name="email"
+          className="max-w-lg flex-1 border-gray-900"
+          placeholder="Enter your email"
+          type="email"
+        />
+        <Button className="" type="submit">
+          Subscribe
+        </Button>
+      </div>
+      {message && <p className="pt-2 text-green-500">{message.message}</p>}
     </form>
   );
 };
