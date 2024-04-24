@@ -2,13 +2,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeUser } from "@/lib/actions/subscribeUser";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+import { ReloadIcon } from "@radix-ui/react-icons";
+
+const Submit = () => {
+  // useFormStatus needs to be used in a child component of the form component
+  // https://react.dev/reference/react-dom/hooks/useFormStatus
+  const { pending } = useFormStatus();
+  return (
+    <Button className="" type="submit" disabled={pending}>
+      {pending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+      {pending ? "Please wait" : "Subscribe"}
+    </Button>
+  );
+};
 
 const SubscribeForm = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, formAction] = useFormState(subscribeUser, null);
   return (
-    <form action={formAction} className="flex space-x-2">
+    <form action={formAction} className="flex flex-col space-x-2">
       <div className="flex w-full items-center justify-center gap-x-1">
         <Input
           name="email"
@@ -16,9 +28,7 @@ const SubscribeForm = () => {
           placeholder="Enter your email"
           type="email"
         />
-        <Button className="" type="submit">
-          Subscribe
-        </Button>
+        <Submit />
       </div>
       {message && <p className="pt-2 text-green-500">{message.message}</p>}
     </form>

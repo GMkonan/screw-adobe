@@ -50,19 +50,14 @@ table "notifications" for people who want to receive an email for when affinity 
   - [x] should the unsubscribe route be a page? Not for now because I'm lazy
 - [x] check if schema has email as unique
 - [x] tidy up route api code and handle sending emails only when there is a sale
-- [ ] rate limiter? (subscribe form only)
+- [x] Add footer
 - [ ] Deploy to vercel
-- [x] footer
 - [ ] Some more visual tinkering (both email and UI)
 - [ ] Setup cronjob to check for sale (upstash?)
   - cron should be used for both checking for sale and sending email
   - define correct interval (everyday?)
 - [ ] open graph stuff
 - [ ] Add toast or something to show you subscribed (maybe not, lazy)
-
-### Questions
-
-- should I make some sort of queue system to send the emails? or just bulk? check that other project to see how it was done.
 
 ### Some references
 
