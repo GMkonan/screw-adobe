@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
@@ -20,7 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>{children}</body>
+      <body
+        className={`flex h-screen w-full flex-col text-center font-sans ${inter.variable}`}
+      >
+        <main className="h-screen">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

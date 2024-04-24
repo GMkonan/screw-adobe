@@ -72,7 +72,7 @@ export async function GET() {
 
   return sale
     ? NextResponse.json(
-        { message: "Found some cool sale!", sale: Boolean(sale) },
+        { message: "Sale ON!", sale: Boolean(sale) },
         { status: 200 },
       )
     : NextResponse.json(
