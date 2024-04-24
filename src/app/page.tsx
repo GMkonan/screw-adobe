@@ -1,4 +1,4 @@
-import SubscribeForm from "@/components/SubscribeForm";
+import SubscribeForm from "@/app/_components/SubscribeForm";
 import { cn } from "@/lib/utils";
 import { db } from "@/server/db";
 import { CheckCircle2Icon, CircleXIcon } from "lucide-react";
