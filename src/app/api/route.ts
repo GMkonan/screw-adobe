@@ -74,6 +74,18 @@ export async function GET(req: Request, res: Response) {
       { status: 200 },
     );
   }
+
+  try {
+    const html = await response.text();
+    const a = load(html);
+    console.log(a("s"));
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Error fetching data" },
+      { status: 200 },
+    );
+  }
   const html = await response.text();
   const $ = load(html);
   console.log($("s"));
