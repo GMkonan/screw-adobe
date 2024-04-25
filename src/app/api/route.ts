@@ -75,8 +75,8 @@ export async function GET(req: Request, res: Response) {
     );
   }
 
+  const html = await response.text();
   try {
-    const html = await response.text();
     const a = load(html);
     console.log(a("s"));
   } catch (err) {
@@ -86,7 +86,6 @@ export async function GET(req: Request, res: Response) {
       { status: 200 },
     );
   }
-  const html = await response.text();
   const $ = load(html);
   console.log($("s"));
 
