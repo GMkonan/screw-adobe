@@ -1,6 +1,6 @@
 ## Screw adobe, buy affinity Suite
 
-Quick project.
+Quick project. Sale checking occurs every day at 12:00 UTC.
 
 ### Tech
 
