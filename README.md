@@ -26,10 +26,10 @@ Quick project. Sale checking occurs every day at 12:00 UTC.
 - [x] Add footer
 - [x] Deploy to vercel
 - [x] Some more visual tinkering (both email and UI)
-- [ ] Cleanup README
-- [ ] Setup cronjob to check for sale (upstash?)
-- [ ] favicon (affinity logo with sale tag?)
-- [ ] open graph stuff
+- [x] Cleanup README
+- [x] Setup cronjob to check for sale (upstash?)
+- [x] open graph stuff
+- [ ] favicon (maybe)
 - [ ] Add toast or something to show you subscribed (maybe not, lazy)
 
 ### About scraping
