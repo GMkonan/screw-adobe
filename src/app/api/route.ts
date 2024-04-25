@@ -62,11 +62,18 @@ function runMiddleware(req: unknown, res: unknown, fn: any) {
 }
 
 export async function GET(req: Request, res: Response) {
-  await runMiddleware(req, res, cors);
   // fetch data from affinity website
   const response = await fetch(
     "https://affinity.serif.com/en-us/affinity-pricing/",
-  );
+  ).catch((err) => {
+    console.log(err);
+  });
+  if (!response) {
+    return NextResponse.json(
+      { message: "Error fetching data" },
+      { status: 200 },
+    );
+  }
   const html = await response.text();
   const $ = load(html);
   console.log($("s"));
