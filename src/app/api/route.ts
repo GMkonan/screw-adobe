@@ -9,7 +9,7 @@ import { env } from "@/env";
 import { Resend } from "resend";
 import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
 import { render } from "@react-email/render";
-
+import Cors from "cors";
 const resend = new Resend(env.RESEND_API_KEY);
 
 const sendEmail = async (userEmail: string) => {
@@ -40,10 +40,34 @@ const sendNotification = async () => {
   return await Promise.all(userPromises);
 };
 
-export async function GET() {
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ["POST"],
+});
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function runMiddleware(req: unknown, res: unknown, fn: any) {
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    fn(req, res, (result: unknown) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
+export async function GET(req: Request, res: Response) {
+  await runMiddleware(req, res, cors);
   // fetch data from affinity website
-  const res = await fetch("https://affinity.serif.com/en-us/affinity-pricing/");
-  const html = await res.text();
+  const response = await fetch(
+    "https://affinity.serif.com/en-us/affinity-pricing/",
+  );
+  const html = await response.text();
   const $ = load(html);
   console.log($("s"));
 

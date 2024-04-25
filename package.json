@@ -22,6 +22,7 @@
     "cheerio": "^1.0.0-rc.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cors": "^2.8.5",
     "drizzle-orm": "^0.29.4",
     "lucide-react": "^0.368.0",
     "next": "latest",
