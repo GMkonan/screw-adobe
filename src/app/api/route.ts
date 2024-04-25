@@ -76,7 +76,11 @@ export async function GET() {
         { status: 200 },
       )
     : NextResponse.json(
-        { message: "No sale found", sale: Boolean(sale) },
+        {
+          message: "No sale found",
+          sale: Boolean(sale),
+          isThisWorking: $("s"),
+        },
         { status: 200 },
       );
 }

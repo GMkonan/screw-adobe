@@ -28,6 +28,7 @@ Quick project.
 - [x] Some more visual tinkering (both email and UI)
 - [ ] Cleanup README
 - [ ] Setup cronjob to check for sale (upstash?)
+- [ ] favicon (affinity logo with sale tag?)
 - [ ] open graph stuff
 - [ ] Add toast or something to show you subscribed (maybe not, lazy)
 
