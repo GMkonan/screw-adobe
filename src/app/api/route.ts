@@ -69,7 +69,7 @@ export async function GET() {
         .set({ isOnSale: false })
         .where(eq(onSale.id, 1)));
   }
-  const isThisWorking = $("s");
+  const isThisWorking = $("s").text();
   return sale
     ? NextResponse.json(
         { message: "Sale ON!", sale: Boolean(sale) },
