@@ -1,12 +1,12 @@
-Screw adobe, buy affinity
+Screw adobe, buy affinity Suite
 
 ### Tech
 
-- turso
+- turso (database)
 - resend (email)
-- cheerio
+- cheerio (scraping)
 - vercel (hope the hosting works in this case)
-- cronjob (upstash?)
+- upstash (cronjob)
 
 https://github.com/emekaorji/web-scraping-with-nextjs-and-cheerio/blob/main/assets/js/webScraper.js
 
@@ -52,6 +52,7 @@ table "notifications" for people who want to receive an email for when affinity 
 - [x] tidy up route api code and handle sending emails only when there is a sale
 - [x] Add footer
 - [ ] Deploy to vercel
+- [ ] Cleanup README
 - [ ] Some more visual tinkering (both email and UI)
 - [ ] Setup cronjob to check for sale (upstash?)
   - cron should be used for both checking for sale and sending email
