@@ -87,7 +87,6 @@ export async function GET(req: Request, res: Response) {
     );
   }
   const $ = load(html);
-  console.log($("s"));
 
   // s is a "sale" tag
   // maybe we should check classes as well to be more precise
@@ -111,7 +110,7 @@ export async function GET(req: Request, res: Response) {
         .set({ isOnSale: false })
         .where(eq(onSale.id, 1)));
   }
-  const isThisWorking = $("s").text();
+  const isThisWorking = $("s").prevObject?.text();
   return sale
     ? NextResponse.json(
         { message: "Sale ON!", sale: Boolean(sale) },
