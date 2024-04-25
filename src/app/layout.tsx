@@ -20,10 +20,10 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@GuilhermeKonan",
     title: "Screw Adobe | Buy Affinity",
     description: "Check when Affinity Suite is on sale!",
-    image: "https://screw-adobe.vercel.app/website.png",
+    creator: "@GuilhermeKonan",
+    images: ["https://screw-adobe.vercel.app/website.png"],
   },
 };
 
