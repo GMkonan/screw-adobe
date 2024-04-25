@@ -45,11 +45,11 @@ export async function GET() {
   const res = await fetch("https://affinity.serif.com/en-us/affinity-pricing/");
   const html = await res.text();
   const $ = load(html);
+  console.log($("s"));
 
   // s is a "sale" tag
   // maybe we should check classes as well to be more precise
   const sale = $("s").length >= 1;
-
   const isOnSale = await db.query.onSale.findFirst();
 
   // maybe passing sale to isOnSale directly but having a way to not update if is the same value is better

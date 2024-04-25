@@ -5,7 +5,6 @@ import { CheckCircle2Icon, CircleXIcon } from "lucide-react";
 
 export default async function HomePage() {
   const sale = await db.query.onSale.findFirst();
-  console.log("sale", sale);
 
   return (
     <section className="h-full w-full bg-background py-12 md:py-24 lg:py-32 xl:py-48">
