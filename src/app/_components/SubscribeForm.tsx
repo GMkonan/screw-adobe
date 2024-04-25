@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { subscribeUser } from "@/lib/actions/subscribeUser";
 import { useFormState, useFormStatus } from "react-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
 
 const Submit = () => {
   // useFormStatus needs to be used in a child component of the form component
@@ -18,7 +19,7 @@ const Submit = () => {
 };
 
 const SubscribeForm = () => {
-  const [message, formAction] = useFormState(subscribeUser, null);
+  const [data, formAction] = useFormState(subscribeUser, null);
   return (
     <form action={formAction} className="flex flex-col space-x-2">
       <div className="flex w-full items-center justify-center gap-x-1">
@@ -30,7 +31,13 @@ const SubscribeForm = () => {
         />
         <Submit />
       </div>
-      {message && <p className="pt-2 text-green-500">{message.message}</p>}
+      {data && (
+        <span
+          className={cn("pt-2", data.error ? "text-red-500" : "text-green-500")}
+        >
+          {data.message}
+        </span>
+      )}
     </form>
   );
 };

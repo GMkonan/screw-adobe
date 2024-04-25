@@ -6,7 +6,10 @@ const Footer = () => {
         <a className="underline" href="https://twitter.com/GuilhermeKonan">
           Konan
         </a>{" "}
-        • Source on <a className="underline">GitHub</a>
+        • Source on{" "}
+        <a className="underline" href="https://github.com/GMkonan/screw-adobe">
+          GitHub
+        </a>
       </p>
     </footer>
   );
