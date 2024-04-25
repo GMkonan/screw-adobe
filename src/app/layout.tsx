@@ -16,14 +16,14 @@ export const metadata = {
   openGraph: {
     title: "Screw Adobe | Buy Affinity",
     description: "Check when Affinity Suite is on sale!",
-    image: "/website.png",
+    image: "https://screw-adobe.vercel.app/website.png",
   },
   twitter: {
     card: "summary_large_image",
     site: "@GuilhermeKonan",
     title: "Screw Adobe | Buy Affinity",
     description: "Check when Affinity Suite is on sale!",
-    image: "/website.png",
+    image: "https://screw-adobe.vercel.app/website.png",
   },
 };
 
