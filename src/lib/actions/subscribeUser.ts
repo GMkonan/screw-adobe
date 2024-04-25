@@ -11,7 +11,7 @@ const insertSubscribedUser = async (email: string) => {
       subscribed: true,
     })
     .catch((err) => {
-      console.log("error", err);
+      console.log("error Inserting user");
     });
 };
 
@@ -31,7 +31,6 @@ export async function subscribeUser(_: unknown, queryData: FormData) {
         .set({ subscribed: true })
         .where(eq(notifications.email, userEmail))
         .catch((err) => {
-          console.log("error", err);
           return { message: `Error updating user`, error: true };
         });
       return { message: `User resubscribed`, error: false };
@@ -41,7 +40,6 @@ export async function subscribeUser(_: unknown, queryData: FormData) {
   }
 
   await insertSubscribedUser(userEmail).catch((err) => {
-    console.log("error", err);
     return { message: `Error inserting user`, error: true };
   });
 
