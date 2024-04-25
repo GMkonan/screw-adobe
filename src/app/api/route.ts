@@ -1,5 +1,3 @@
-// app/api/route.js 👈🏽
-
 import { NextResponse } from "next/server";
 import { load } from "cheerio";
 import { db } from "@/server/db";
@@ -9,7 +7,7 @@ import { env } from "@/env";
 import { Resend } from "resend";
 import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
 import { render } from "@react-email/render";
-import Cors from "cors";
+
 const resend = new Resend(env.RESEND_API_KEY);
 
 const sendEmail = async (userEmail: string) => {
@@ -40,57 +38,16 @@ const sendNotification = async () => {
   return await Promise.all(userPromises);
 };
 
-// Initializing the cors middleware
-const cors = Cors({
-  methods: ["POST"],
-});
-
-// Helper method to wait for a middleware to execute before continuing
-// And to throw an error when an error happens in a middleware
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function runMiddleware(req: unknown, res: unknown, fn: any) {
-  return new Promise((resolve, reject) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    fn(req, res, (result: unknown) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-
-      return resolve(result);
-    });
-  });
-}
-
-export async function GET(req: Request, res: Response) {
+export async function GET() {
   // fetch data from affinity website
-  const response = await fetch(
-    "https://affinity.serif.com/en-us/affinity-pricing/",
-  ).catch((err) => {
-    console.log(err);
-  });
-  if (!response) {
-    return NextResponse.json(
-      { message: "Error fetching data" },
-      { status: 200 },
-    );
-  }
-
-  const html = await response.text();
-  try {
-    const a = load(html);
-    console.log(a("s"));
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json(
-      { message: "Error fetching data" },
-      { status: 200 },
-    );
-  }
+  const res = await fetch("https://affinity.serif.com/en-us/affinity-pricing/");
+  const html = await res.text();
   const $ = load(html);
 
   // s is a "sale" tag
   // maybe we should check classes as well to be more precise
   const sale = $("s").length >= 1;
+
   const isOnSale = await db.query.onSale.findFirst();
 
   // maybe passing sale to isOnSale directly but having a way to not update if is the same value is better
@@ -110,18 +67,14 @@ export async function GET(req: Request, res: Response) {
         .set({ isOnSale: false })
         .where(eq(onSale.id, 1)));
   }
-  const isThisWorking = $("s").prevObject?.text();
+
   return sale
     ? NextResponse.json(
         { message: "Sale ON!", sale: Boolean(sale) },
         { status: 200 },
       )
     : NextResponse.json(
-        {
-          message: "No sale found",
-          sale: Boolean(sale),
-          isThisWorking: isThisWorking,
-        },
+        { message: "No sale found", sale: Boolean(sale) },
         { status: 200 },
       );
 }
