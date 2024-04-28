@@ -16,14 +16,14 @@ export const metadata = {
   openGraph: {
     title: "Screw Adobe | Buy Affinity",
     description: "Check when Affinity Suite is on sale!",
-    image: "https://screw-adobe.vercel.app/website.png",
+    image: "https://screw-adobe.vercel.app/website_.png",
   },
   twitter: {
     card: "summary_large_image",
     title: "Screw Adobe | Buy Affinity",
     description: "Check when Affinity Suite is on sale!",
     creator: "@GuilhermeKonan",
-    images: ["https://screw-adobe.vercel.app/website.png"],
+    images: ["https://screw-adobe.vercel.app/website_.png"],
   },
 };
 
@@ -33,9 +33,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html className="h-full" lang="en">
       <body
-        className={`flex h-screen w-full flex-col text-center font-sans ${inter.variable}`}
+        className={`flex h-full w-full flex-col text-center font-sans ${inter.variable}`}
       >
         <main className="h-screen">{children}</main>
         <Footer />
