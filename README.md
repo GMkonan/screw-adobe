@@ -4,7 +4,7 @@ Quick project. Sale checking occurs every day at 12:00 UTC.
 
 ### Tech
 
-- turso (database)
+- turso (database) (dev db is just turso dev)
 - resend (email)
 - cheerio (scraping)
 - vercel (hosting)
@@ -29,8 +29,8 @@ Quick project. Sale checking occurs every day at 12:00 UTC.
 - [x] Cleanup README
 - [x] Setup cronjob to check for sale (upstash?)
 - [x] open graph stuff
-- [ ] favicon (maybe)
-- [ ] Add toast or something to show you subscribed (maybe not, lazy)
+- [x] toast
+- [ ] ratelimit by ip (clouflare, upstash or self implemented)
 
 ### About scraping
 

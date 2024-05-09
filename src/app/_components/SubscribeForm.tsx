@@ -5,7 +5,8 @@ import { subscribeUser } from "@/lib/actions/subscribeUser";
 import { useFormState, useFormStatus } from "react-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-
+import { toast } from "sonner";
+import { useEffect } from "react";
 const Submit = () => {
   // useFormStatus needs to be used in a child component of the form component
   // https://react.dev/reference/react-dom/hooks/useFormStatus
@@ -20,6 +21,12 @@ const Submit = () => {
 
 const SubscribeForm = () => {
   const [data, formAction] = useFormState(subscribeUser, null);
+
+  useEffect(() => {
+    !data || data.error
+      ? toast.error(data?.message ?? "Error")
+      : toast.success(data.message);
+  }, [data]);
   return (
     <form action={formAction} className="flex flex-col space-x-2">
       <div className="flex w-full items-center justify-center gap-x-1">
@@ -31,13 +38,6 @@ const SubscribeForm = () => {
         />
         <Submit />
       </div>
-      {data && (
-        <span
-          className={cn("pt-2", data.error ? "text-red-500" : "text-green-500")}
-        >
-          {data.message}
-        </span>
-      )}
     </form>
   );
 };

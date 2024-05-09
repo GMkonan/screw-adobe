@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-
+import { Toaster } from "@/components/ui/sonner";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -38,6 +38,7 @@ export default function RootLayout({
         className={`flex h-full w-full flex-col text-center font-sans ${inter.variable}`}
       >
         <main className="h-screen">{children}</main>
+        <Toaster richColors theme="light" />
         <Footer />
       </body>
     </html>
