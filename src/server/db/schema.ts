@@ -26,6 +26,7 @@ export const notifications = createTable("notifications", {
   id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   email: text("name", { length: 256 }).unique(),
   subscribed: integer("subscribed", { mode: "boolean" }),
+  notified: integer("notified", { mode: "boolean" }).default(false),
   createdAt: int("created_at", { mode: "timestamp" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

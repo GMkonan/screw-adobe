@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { load } from "cheerio";
 import { db } from "@/server/db";
-import { onSale } from "@/server/db/schema";
+import { notifications, onSale } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { Resend } from "resend";
@@ -17,7 +17,7 @@ const sendEmail = async (userEmail: string) => {
   );
 
   await resend.emails.send({
-    from: "test <noreply@gmkonan.dev>",
+    from: "Affinity Sale <noreply@gmkonan.dev>",
     to: userEmail,
     subject: "Affinity suite is on sale!",
     html: templateToHtml,
@@ -26,8 +26,10 @@ const sendEmail = async (userEmail: string) => {
 };
 
 const sendNotification = async () => {
+  // and notified == false
   const users = await db.query.notifications.findMany({
-    where: (users, { eq }) => eq(users.subscribed, true),
+    where: (users, { eq, and }) =>
+      and(eq(users.subscribed, true), eq(users.notified, false)),
   });
 
   // this way the emails will still be sent even if one goes wrong
@@ -58,15 +60,19 @@ async function handler() {
       (await db.update(onSale).set({ isOnSale: true }).where(eq(onSale.id, 1)));
 
     // only send notifications if the sale is on
-    const data = await sendNotification();
-
-    console.log(data);
+    await sendNotification().then(
+      // eslint-disable-next-line drizzle/enforce-update-with-where
+      async () => await db.update(notifications).set({ notified: true }),
+    );
   } else if (!sale) {
     isOnSale?.isOnSale === true &&
       (await db
         .update(onSale)
         .set({ isOnSale: false })
         .where(eq(onSale.id, 1)));
+
+    // eslint-disable-next-line drizzle/enforce-update-with-where
+    await db.update(notifications).set({ notified: false });
   }
 
   return sale
