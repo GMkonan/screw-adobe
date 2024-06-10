@@ -80,4 +80,4 @@ async function handler() {
       );
 }
 
-export const GET = verifySignatureAppRouter(handler);
+export const POST = verifySignatureAppRouter(handler);
