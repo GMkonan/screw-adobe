@@ -7,7 +7,7 @@ import { env } from "@/env";
 import { Resend } from "resend";
 import SubscribeEmailTemplate from "@/components/emails/SubscribeEmailTemplate";
 import { render } from "@react-email/render";
-import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
+import { verifySignatureAppRouter } from "@upstash/qstash/dist/nextjs";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -39,10 +39,7 @@ const sendNotification = async () => {
   return await Promise.all(userPromises);
 };
 
-async function handler(request: Request) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  await request.json();
-
+async function handler() {
   // fetch data from affinity website
   const res = await fetch("https://affinity.serif.com/en-us/affinity-pricing/");
   const html = await res.text();
